@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ mode }} Post - IS 211 Flask Blog</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f7fa; color: #222; }
+        .card { max-width: 640px; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .field { margin-bottom: 14px; }
+        label { display: block; font-weight: bold; margin-bottom: 6px; }
+        input[type="text"], textarea { width: 100%; padding: 8px; box-sizing: border-box; font-family: inherit; }
+        textarea { min-height: 180px; }
+        button { padding: 10px 16px; background: #2c5aa0; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        .error { color: #b00020; font-weight: bold; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>{{ mode }} Blog Post</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="POST">
+            <div class="field">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="{{ post.title }}" required>
+            </div>
+            <div class="field">
+                <label for="category">Category</label>
+                <input type="text" id="category" name="category" value="{{ post.category }}" required>
+            </div>
+            <div class="field">
+                <label for="content">Content (HTML supported)</label>
+                <textarea id="content" name="content" required>{{ post.content }}</textarea>
+            </div>
+            <div class="field">
+                <label>
+                    <input type="checkbox" name="is_published" value="1" {% if post.is_published %}checked{% endif %}>
+                    Published (uncheck to keep as unpublished draft)
+                </label>
+            </div>
+            <button type="submit">Save Post</button>
+        </form>
+        <p style="margin-top:16px;"><a href="{{ url_for('dashboard') }}">Back to Dashboard</a></p>
+    </div>
+</body>
+</html>
